@@ -1,0 +1,51 @@
+<!-- wp:template-part {"slug":"header","tagName":"header","align":"full"} /-->
+
+<!-- wp:group {"tagName":"main","align":"full","layout":{"type":"constrained"},"style":{"spacing":{"padding":{"top":"3rem","bottom":"5rem"}}}} -->
+<main class="wp-block-group alignfull" style="padding-top:3rem;padding-bottom:5rem">
+
+    <!-- Header Section -->
+    <!-- wp:group {"align":"wide","layout":{"type":"constrained"},"style":{"spacing":{"margin":{"bottom":"3rem"}}}} -->
+    <div class="wp-block-group alignwide" style="margin-bottom:3rem">
+        <!-- wp:heading {"level":1,"style":{"typography":{"fontSize":"3rem"}},"className":"has-glow-orange"} -->
+        <h1 class="wp-block-heading has-glow-orange" style="font-size:3rem">Colección de Pinturas</h1>
+        <!-- /wp:heading -->
+        <!-- wp:paragraph {"style":{"typography":{"fontSize":"1.2rem"}},"textColor":"muted"} -->
+        <p class="has-muted-color has-text-color" style="font-size:1.2rem">Explora mis pinturas disponibles para la venta. Cada obra incluye título, medidas, la visión/proyección artística del autor y precio de adquisición.</p>
+        <!-- /wp:paragraph -->
+    </div>
+    <!-- /wp:group -->
+
+    <!-- Gallery Loop -->
+    <!-- wp:group {"align":"wide","layout":{"type":"constrained"}} -->
+    <div class="wp-block-group alignwide">
+        <!-- wp:query {"queryId":0,"query":{"postType":"pintura","inherit":true,"perPage":9},"displayLayout":{"type":"flex","columns":3}} -->
+        <div class="wp-block-query">
+            <!-- wp:post-template {"layout":{"type":"grid","columnCount":3}} -->
+                <!-- wp:group {"className":"glow-card-orange","style":{"spacing":{"padding":{"top":"1.5rem","bottom":"1.5rem","left":"1.5rem","right":"1.5rem"}}},"layout":{"type":"constrained"}} -->
+                <div class="wp-block-group glow-card-orange" style="padding-top:1.5rem;padding-bottom:1.5rem;padding-left:1.5rem;padding-right:1.5rem">
+                    <!-- wp:post-featured-image {"isLink":true,"style":{"border":{"radius":"8px"}},"height":"250px"} /-->
+                    
+                    <!-- wp:post-title {"isLink":true,"level":2,"style":{"typography":{"fontSize":"1.4rem","fontWeight":"700"}},"textColor":"primary"} /-->
+                    
+                    <!-- wp:post-excerpt {"moreText":"Ver Proyección del Autor →"} /-->
+                    
+                    <!-- wp:shortcode -->
+                    [detalles_pintura]
+                    <!-- /wp:shortcode -->
+                </div>
+                <!-- /wp:group -->
+            <!-- /wp:post-template -->
+
+            <!-- wp:query-pagination {"layout":{"type":"flex","justifyContent":"center"}} -->
+            <!-- wp:query-pagination-previous /-->
+            <!-- wp:query-pagination-next /-->
+            <!-- /wp:query-pagination -->
+        </div>
+        <!-- /wp:query -->
+    </div>
+    <!-- /wp:group -->
+
+</main>
+<!-- /wp:group -->
+
+<!-- wp:template-part {"slug":"footer","tagName":"footer","align":"full"} /-->

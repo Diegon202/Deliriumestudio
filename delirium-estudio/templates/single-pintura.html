@@ -1,0 +1,62 @@
+<!-- wp:template-part {"slug":"header","tagName":"header","align":"full"} /-->
+
+<!-- wp:group {"tagName":"main","align":"full","layout":{"type":"constrained"},"style":{"spacing":{"padding":{"top":"3rem","bottom":"5rem"}}}} -->
+<main class="wp-block-group alignfull" style="padding-top:3rem;padding-bottom:5rem">
+
+    <!-- Back to Gallery Link -->
+    <!-- wp:group {"align":"wide","layout":{"type":"constrained"},"style":{"spacing":{"margin":{"bottom":"2rem"}}}} -->
+    <div class="wp-block-group alignwide" style="margin-bottom:2rem">
+        <!-- wp:paragraph {"style":{"typography":{"fontSize":"0.9rem"}}} -->
+        <p style="font-size:0.9rem"><a href="/pintura/">← Volver a la Colección de Pinturas</a></p>
+        <!-- /wp:paragraph -->
+    </div>
+    <!-- /wp:group -->
+
+    <!-- Single Painting Detail Layout -->
+    <!-- wp:columns {"align":"wide","style":{"spacing":{"blockGap":"3rem"}}} -->
+    <div class="wp-block-columns alignwide">
+        <!-- Left Column: Image and Description (Artist Statement) -->
+        <!-- wp:column {"width":"60%"} -->
+        <div class="wp-block-column" style="flex-basis:60%">
+            <!-- wp:post-title {"level":1,"style":{"typography":{"fontSize":"2.8rem"}},"className":"has-glow-orange"} /-->
+            
+            <!-- wp:post-featured-image {"style":{"border":{"radius":"8px"}},"margin":"2rem 0"} /-->
+
+            <!-- wp:heading {"level":3,"style":{"typography":{"fontSize":"1.5rem"}},"textColor":"secondary"} -->
+            <h3 class="wp-block-heading has-secondary-color has-text-color" style="font-size:1.5rem">Proyección del Autor</h3>
+            <!-- /wp:heading -->
+
+            <!-- wp:post-content {"layout":{"type":"constrained"}} /-->
+        </div>
+        <!-- /wp:column -->
+
+        <!-- Right Column: Details & CTA Card -->
+        <!-- wp:column {"width":"40%"} -->
+        <div class="wp-block-column" style="flex-basis:40%">
+            <!-- wp:heading {"level":3,"style":{"typography":{"fontSize":"1.5rem"}},"textColor":"tertiary"} -->
+            <h3 class="wp-block-heading has-tertiary-color has-text-color" style="font-size:1.5rem">Detalles de la Obra</h3>
+            <!-- /wp:heading -->
+
+            <!-- wp:shortcode -->
+            [detalles_pintura]
+            <!-- /wp:shortcode -->
+
+            <!-- wp:group {"className":"glow-card","style":{"spacing":{"padding":{"top":"1.5rem","bottom":"1.5rem","left":"1.5rem","right":"1.5rem"}},"margin":{"top":"1.5rem"}},"layout":{"type":"constrained"}} -->
+            <div class="wp-block-group glow-card" style="padding-top:1.5rem;padding-bottom:1.5rem;padding-left:1.5rem;padding-right:1.5rem;margin-top:1.5rem">
+                <!-- wp:paragraph {"style":{"typography":{"fontSize":"0.9rem"}},"textColor":"muted"} -->
+                <p class="has-muted-color has-text-color" style="font-size:0.9rem"><strong>🎨 Proceso de Compra:</strong></p>
+                <!-- /wp:paragraph -->
+                <!-- wp:paragraph {"style":{"typography":{"fontSize":"0.85rem"}},"textColor":"muted"} -->
+                <p class="has-muted-color has-text-color" style="font-size:0.85rem">1. Haz clic en el botón de WhatsApp arriba para consultar disponibilidad.<br>2. Coordinamos el método de pago seguro y envío o retiro del estudio.<br>3. Se entrega certificado de autenticidad firmado por el artista.</p>
+                <!-- /wp:paragraph -->
+            </div>
+            <!-- /wp:group -->
+        </div>
+        <!-- /wp:column -->
+    </div>
+    <!-- /wp:columns -->
+
+</main>
+<!-- /wp:group -->
+
+<!-- wp:template-part {"slug":"footer","tagName":"footer","align":"full"} /-->

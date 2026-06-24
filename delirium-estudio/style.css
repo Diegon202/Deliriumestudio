@@ -1,0 +1,84 @@
+/*
+Theme Name: Delirium Estudio
+Theme URI: https://deliriumestudio.com
+Author: Diego Burga & Antigravity
+Author URI: https://deliriumestudio.com
+Description: Un tema premium oscuro y moderno con la paleta de colores del logo de Delirium Estudio. Diseñado especialmente para estudios de grabación, producción musical, podcasters y artistas visuales.
+Version: 1.0.0
+Requires at least: 6.0
+Tested up to: 6.5
+Requires PHP: 7.4
+License: GNU General Public License v2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
+Text Domain: delirium-estudio
+Tags: dark, one-column, custom-colors, custom-menu, portfolio, sticky-post, theme-options, threaded-comments, translation-ready
+
+Este tema está construido como un WordPress Block Theme (Full Site Editing).
+*/
+
+/* Estilos de Utilidad y Efectos Premium */
+.has-glow-turquoise {
+    text-shadow: 0 0 10px rgba(74, 210, 190, 0.6), 0 0 20px rgba(74, 210, 190, 0.3) !important;
+}
+
+.has-glow-orange {
+    text-shadow: 0 0 10px rgba(240, 139, 87, 0.6), 0 0 20px rgba(240, 139, 87, 0.3) !important;
+}
+
+.has-glow-cream {
+    text-shadow: 0 0 10px rgba(247, 229, 157, 0.6), 0 0 20px rgba(247, 229, 157, 0.3) !important;
+}
+
+/* Efectos de Hover y Cajas Luminosas */
+.glow-card {
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    background-color: #1A1A1A !important;
+    border-radius: 12px !important;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1) !important;
+}
+
+.glow-card:hover {
+    border-color: rgba(74, 210, 190, 0.5) !important;
+    box-shadow: 0 10px 25px rgba(74, 210, 190, 0.15) !important;
+    transform: translateY(-4px) !important;
+}
+
+.glow-card-orange {
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    background-color: #1A1A1A !important;
+    border-radius: 12px !important;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1) !important;
+}
+
+.glow-card-orange:hover {
+    border-color: rgba(240, 139, 87, 0.5) !important;
+    box-shadow: 0 10px 25px rgba(240, 139, 87, 0.15) !important;
+    transform: translateY(-4px) !important;
+}
+
+.glow-card-cream {
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    background-color: #1A1A1A !important;
+    border-radius: 12px !important;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1) !important;
+}
+
+.glow-card-cream:hover {
+    border-color: rgba(247, 229, 157, 0.5) !important;
+    box-shadow: 0 10px 25px rgba(247, 229, 157, 0.15) !important;
+    transform: translateY(-4px) !important;
+}
+
+/* Bordes y Divisiones */
+.glow-divider {
+    height: 2px;
+    background: linear-gradient(90deg, #4AD2BE 0%, #F08B57 50%, #F7E59D 100%);
+    border: none;
+    margin: 2rem 0;
+}
+
+/* Ajustes de Iframe Multimedia */
+iframe {
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
