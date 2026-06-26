@@ -90,7 +90,7 @@
                 "@type": "Blog",
                 "@id": "https://deliriumestudio.com/#blog",
                 "name": "Blog de Música Nacional de Delirium Estudio",
-                "url": "https://deliriumestudio.com/blog",
+                "url": "https://deliriumestudio.com/blogs",
                 "description": "Blog sobre música nacional, producción musical, grabación, composición y escena artística de Costa Rica.",
                 "publisher": {
                     "@id": "https://deliriumestudio.com/#localbusiness"
@@ -134,7 +134,7 @@
                 <li><a id="nav-servicios" href="#servicios">Servicios</a></li>
                 <li><a id="nav-artistas" href="#artistas">Artistas</a></li>
                 <li><a id="nav-galeria" href="#galeria">Galería</a></li>
-                <li><a id="nav-blog" href="#blog">Blog</a></li>
+                <li><a id="nav-blog" href="/blogs" onclick="navigateToBlog(event)">Blog</a></li>
             </ul>
         </nav>
         <div class="language-switcher" aria-label="Selector de idioma">
@@ -920,7 +920,7 @@
             updatePageMeta({
                 title: t("blogMetaTitle"),
                 description: t("blogMetaDescription"),
-                url: `${SITE_URL}blog`,
+                url: `${SITE_URL}blogs`,
                 image: DEFAULT_IMAGE
             });
         }
@@ -1009,6 +1009,19 @@
             tryVideoPath(0);
         }
 
+        function showBlogGrid({ updateUrl = true } = {}) {
+            if (updateUrl && window.location.pathname !== '/blogs') {
+                window.history.pushState({}, '', '/blogs');
+            }
+            switchSectionOnly('blog');
+            fetchBlogPosts();
+        }
+
+        function navigateToBlog(event) {
+            if (event) event.preventDefault();
+            showBlogGrid();
+        }
+
         // Enrutador central basado en hashes de URL y rutas limpias (SPA Routing)
         function handleRouting() {
             const hash = window.location.hash;
@@ -1029,8 +1042,7 @@
                 switchSectionOnly('galeria');
                 return;
             } else if (hash === '#blog') {
-                switchSectionOnly('blog');
-                fetchBlogPosts();
+                showBlogGrid();
                 return;
             }
 
@@ -1038,8 +1050,7 @@
             const cleanPath = path.toLowerCase().replace(/^\/+|\/+$/g, '');
 
             if (cleanPath === 'blog' || cleanPath === 'blogs') {
-                switchSectionOnly('blog');
-                fetchBlogPosts();
+                showBlogGrid({ updateUrl: cleanPath === 'blog' });
                 return;
             }
             
@@ -1182,7 +1193,7 @@
                 if (post) {
                     renderBlogPostContent(post);
                 } else {
-                    reader.innerHTML = '<div class="error-message">No se encontró el artículo solicitado.<br><a href="#blog" class="btn btn-outline" style="margin-top: 1.5rem; display: inline-flex; border-radius: 30px;">Ir al Blog</a></div>';
+                    reader.innerHTML = '<div class="error-message">No se encontró el artículo solicitado.<br><a href="/blogs" onclick="backToBlogGrid(event);" class="btn btn-outline" style="margin-top: 1.5rem; display: inline-flex; border-radius: 30px;">Ir al Blog</a></div>';
                 }
                 return;
             }
@@ -1199,12 +1210,12 @@
                     if (post) {
                         renderBlogPostContent(post);
                     } else {
-                        reader.innerHTML = '<div class="error-message">No se encontró el artículo solicitado.<br><a href="#blog" class="btn btn-outline" style="margin-top: 1.5rem; display: inline-flex; border-radius: 30px;">Ir al Blog</a></div>';
+                        reader.innerHTML = '<div class="error-message">No se encontró el artículo solicitado.<br><a href="/blogs" onclick="backToBlogGrid(event);" class="btn btn-outline" style="margin-top: 1.5rem; display: inline-flex; border-radius: 30px;">Ir al Blog</a></div>';
                     }
                 })
                 .catch(error => {
                     console.error("Error al cargar artículo por ID: ", error);
-                    reader.innerHTML = '<div class="error-message">Error de conexión al cargar el artículo.<br><a href="#blog" class="btn btn-outline" style="margin-top: 1.5rem; display: inline-flex; border-radius: 30px;">Ir al Blog</a></div>';
+                    reader.innerHTML = '<div class="error-message">Error de conexión al cargar el artículo.<br><a href="/blogs" onclick="backToBlogGrid(event);" class="btn btn-outline" style="margin-top: 1.5rem; display: inline-flex; border-radius: 30px;">Ir al Blog</a></div>';
                 });
         }
 
@@ -1262,7 +1273,7 @@
             const supportsShare = !!navigator.share;
 
             reader.innerHTML = `
-                <a href="/blog" onclick="backToBlogGrid(event)" class="btn btn-outline" style="margin-bottom: 2.5rem; border-radius: 30px;">${t("backBlog")}</a>
+                <a href="/blogs" onclick="backToBlogGrid(event)" class="btn btn-outline" style="margin-bottom: 2.5rem; border-radius: 30px;">${t("backBlog")}</a>
                 <article class="full-article">
                     <span class="article-date">📅 Publicado el ${date} por ${post.author.name}</span>
                     <h1 class="article-title">${post.title}</h1>
@@ -1300,16 +1311,7 @@
 
         function backToBlogGrid(e) {
             if (e) e.preventDefault();
-            if (window.location.pathname !== '/' && window.location.pathname !== '/index.html' && window.location.pathname.includes('/blog')) {
-                // Cambiamos la URL a la raíz de forma limpia y mostramos la cuadrícula del blog
-                window.history.pushState({}, '', '/blog');
-            } else {
-                window.location.hash = "#blog";
-            }
-            // Aseguramos que se oculte el lector y se muestre la cuadrícula
-            document.getElementById('blog-posts-grid').style.display = 'grid';
-            document.getElementById('blog-post-reader').style.display = 'none';
-            fetchBlogPosts();
+            showBlogGrid();
         }
 
         function copyToClipboard(text) {
@@ -1409,7 +1411,7 @@
                         reader.innerHTML = `
                             <div class="error-message">
                                 No se encontró el artículo solicitado.<br>
-                                <a href="#blog" onclick="backToBlogGrid(event);" class="btn btn-outline" style="margin-top: 1.5rem; display: inline-flex; border-radius: 30px;">Ir al Blog</a>
+                                <a href="/blogs" onclick="backToBlogGrid(event);" class="btn btn-outline" style="margin-top: 1.5rem; display: inline-flex; border-radius: 30px;">Ir al Blog</a>
                             </div>`;
                     }
                 })
@@ -1418,7 +1420,7 @@
                     reader.innerHTML = `
                         <div class="error-message">
                             Error de conexión al cargar el artículo.<br>
-                            <a href="#blog" onclick="backToBlogGrid(event);" class="btn btn-outline" style="margin-top: 1.5rem; display: inline-flex; border-radius: 30px;">Ir al Blog</a>
+                            <a href="/blogs" onclick="backToBlogGrid(event);" class="btn btn-outline" style="margin-top: 1.5rem; display: inline-flex; border-radius: 30px;">Ir al Blog</a>
                         </div>`;
                 });
         }
