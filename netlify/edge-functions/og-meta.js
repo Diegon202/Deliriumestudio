@@ -12,10 +12,12 @@ export default async (request, context) => {
     .replace(/<link rel="canonical" href="[^"]*">\s*/i, "")
     .replace(/<meta property="og:title" content="[^"]*">\s*/i, "")
     .replace(/<meta property="og:description" content="[^"]*">\s*/i, "")
+    .replace(/<meta property="og:image" content="[^"]*">\s*/i, "")
     .replace(/<meta property="og:url" content="[^"]*">\s*/i, "")
     .replace(/<meta property="og:type" content="[^"]*">\s*/i, "")
     .replace(/<meta name="twitter:title" content="[^"]*">\s*/i, "")
     .replace(/<meta name="twitter:description" content="[^"]*">\s*/i, "")
+    .replace(/<meta name="twitter:image" content="[^"]*">\s*/i, "")
     .replace(/<title>[^<]*<\/title>/i, tags);
   
   // Extraer el slug del post
@@ -42,10 +44,12 @@ export default async (request, context) => {
     <link rel="canonical" href="${blogUrl}">
     <meta property="og:title" content="${blogTitle}">
     <meta property="og:description" content="${blogDescription}">
+    <meta property="og:image" content="${imageUrl}">
     <meta property="og:url" content="${blogUrl}">
     <meta property="og:type" content="website">
     <meta name="twitter:title" content="${blogTitle}">
     <meta name="twitter:description" content="${blogDescription}">
+    <meta name="twitter:image" content="${imageUrl}">
     `;
       html = injectHeadTags(html, blogTags);
 

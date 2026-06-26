@@ -809,7 +809,7 @@
                 const cleanExcerpt = tempDiv.textContent || tempDiv.innerText || "";
 
                 return `
-                    <a href="#blog-slug/${post.slug}" class="card orange-glow blog-card reveal active" style="text-decoration: none; color: inherit;">
+                    <a href="/blogs/${post.slug}" class="card orange-glow blog-card reveal active" style="text-decoration: none; color: inherit;">
                         <div class="blog-thumbnail-wrapper">
                             <img src="${thumbnail}" alt="${post.title}" class="blog-thumbnail">
                         </div>
@@ -896,7 +896,7 @@
             const supportsShare = !!navigator.share;
 
             reader.innerHTML = `
-                <a href="#blog" onclick="backToBlogGrid(event)" class="btn btn-outline" style="margin-bottom: 2.5rem; border-radius: 30px;">← Volver al Blog</a>
+                <a href="/blog" onclick="backToBlogGrid(event)" class="btn btn-outline" style="margin-bottom: 2.5rem; border-radius: 30px;">← Volver al Blog</a>
                 <article class="full-article">
                     <span class="article-date">📅 Publicado el ${date} por ${post.author.name}</span>
                     <h1 class="article-title">${post.title}</h1>
@@ -936,7 +936,7 @@
             if (e) e.preventDefault();
             if (window.location.pathname !== '/' && window.location.pathname !== '/index.html' && window.location.pathname.includes('/blog')) {
                 // Cambiamos la URL a la raíz de forma limpia y mostramos la cuadrícula del blog
-                window.history.pushState({}, '', '/#blog');
+                window.history.pushState({}, '', '/blog');
             } else {
                 window.location.hash = "#blog";
             }
