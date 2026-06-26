@@ -8,16 +8,16 @@ export default async (request, context) => {
     .replace(/"/g, "&quot;");
 
   const injectHeadTags = (html, tags) => html
-    .replace(/<meta name="description" content="[^"]*">\s*/i, "")
-    .replace(/<link rel="canonical" href="[^"]*">\s*/i, "")
-    .replace(/<meta property="og:title" content="[^"]*">\s*/i, "")
-    .replace(/<meta property="og:description" content="[^"]*">\s*/i, "")
-    .replace(/<meta property="og:image" content="[^"]*">\s*/i, "")
-    .replace(/<meta property="og:url" content="[^"]*">\s*/i, "")
-    .replace(/<meta property="og:type" content="[^"]*">\s*/i, "")
-    .replace(/<meta name="twitter:title" content="[^"]*">\s*/i, "")
-    .replace(/<meta name="twitter:description" content="[^"]*">\s*/i, "")
-    .replace(/<meta name="twitter:image" content="[^"]*">\s*/i, "")
+    .replace(/<meta\s+name="description"\s+content="[^"]*">\s*/gi, "")
+    .replace(/<link\s+rel="canonical"\s+href="[^"]*">\s*/gi, "")
+    .replace(/<meta\s+property="og:title"\s+content="[^"]*">\s*/gi, "")
+    .replace(/<meta\s+property="og:description"\s+content="[^"]*">\s*/gi, "")
+    .replace(/<meta\s+property="og:image"\s+content="[^"]*">\s*/gi, "")
+    .replace(/<meta\s+property="og:url"\s+content="[^"]*">\s*/gi, "")
+    .replace(/<meta\s+property="og:type"\s+content="[^"]*">\s*/gi, "")
+    .replace(/<meta\s+name="twitter:title"\s+content="[^"]*">\s*/gi, "")
+    .replace(/<meta\s+name="twitter:description"\s+content="[^"]*">\s*/gi, "")
+    .replace(/<meta\s+name="twitter:image"\s+content="[^"]*">\s*/gi, "")
     .replace(/<title>[^<]*<\/title>/i, tags);
   
   // Extraer el slug del post
