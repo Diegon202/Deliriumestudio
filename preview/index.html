@@ -986,16 +986,16 @@
                     
                     <!-- Barra de Compartir -->
                     <div class="article-share-bar">
-                        <span>Compartir:</span>
-                        <a href="https://api.whatsapp.com/send?text=${shareTextEscaped}%20${shareUrlEscaped}" target="_blank" class="share-btn whatsapp" title="Compartir en WhatsApp">🟢 WhatsApp</a>
-                        <a href="https://www.facebook.com/sharer/sharer.php?u=${shareUrlEscaped}" onclick="handleFacebookShare(event, '${post.title.replace(/'/g, "\\'")}', '${cleanShareUrl}')" target="_blank" class="share-btn facebook" title="Compartir en Facebook">🔵 Facebook</a>
-                        
-                        ${supportsShare ? `
-                            <button onclick="shareNatively('${post.title.replace(/'/g, "\\'")}', '${cleanShareUrl}')" class="share-btn native-share" title="Abrir el menú de compartir del dispositivo">📱 Compartir</button>
-                        ` : ''}
-                        <button onclick="shareToInstagram('${cleanShareUrl}')" class="share-btn native-share" title="Copiar enlace para Instagram Stories">📸 Instagram</button>
-                        
-                        <button onclick="copyToClipboard('${cleanShareUrl}')" class="share-btn copy" title="Copiar enlace">📋 Copiar Enlace</button>
+                        <span class="share-title">Compartir</span>
+                        <div class="share-actions" aria-label="Opciones para compartir el artículo">
+                            <a href="https://api.whatsapp.com/send?text=${shareTextEscaped}%20${shareUrlEscaped}" target="_blank" rel="noopener" class="share-btn whatsapp" title="Compartir en WhatsApp" aria-label="Compartir en WhatsApp">WA</a>
+                            <a href="https://www.facebook.com/sharer/sharer.php?u=${shareUrlEscaped}" target="_blank" rel="noopener" class="share-btn facebook" title="Compartir en Facebook" aria-label="Compartir en Facebook">f</a>
+                            ${supportsShare ? `
+                                <button onclick="shareNatively('${post.title.replace(/'/g, "\\'")}', '${cleanShareUrl}')" class="share-btn native-share" title="Abrir el menú de compartir del dispositivo" aria-label="Compartir con el dispositivo">↗</button>
+                            ` : ''}
+                            <button onclick="shareToInstagram('${cleanShareUrl}')" class="share-btn instagram" title="Copiar enlace para Instagram Stories" aria-label="Copiar enlace para Instagram">IG</button>
+                            <button onclick="copyToClipboard('${cleanShareUrl}')" class="share-btn copy" title="Copiar enlace" aria-label="Copiar enlace">⛓</button>
+                        </div>
                     </div>
                     
                     ${post.featured_image ? `<div class="article-banner"><img src="${post.featured_image}" alt="${post.title}"></div>` : ''}
@@ -1004,14 +1004,6 @@
                     </div>
                 </article>
             `;
-        }
-
-        function handleFacebookShare(e, title, url) {
-            const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-            if (isMobile && navigator.share) {
-                e.preventDefault();
-                shareNatively(title, url);
-            }
         }
 
         function backToBlogGrid(e) {
