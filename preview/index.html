@@ -740,6 +740,26 @@
             const hash = window.location.hash;
             const path = window.location.pathname;
             
+            // Si el usuario navega desde un artículo usando el menú principal,
+            // el hash debe tener prioridad sobre la ruta limpia /blogs/slug.
+            if (hash === '#home') {
+                switchSectionOnly('home');
+                return;
+            } else if (hash === '#servicios') {
+                switchSectionOnly('servicios');
+                return;
+            } else if (hash === '#artistas') {
+                switchSectionOnly('artistas');
+                return;
+            } else if (hash === '#galeria') {
+                switchSectionOnly('galeria');
+                return;
+            } else if (hash === '#blog') {
+                switchSectionOnly('blog');
+                fetchBlogPosts();
+                return;
+            }
+
             // Normalizar ruta: quitar barras iniciales/finales y pasar a minúsculas
             const cleanPath = path.toLowerCase().replace(/^\/+|\/+$/g, '');
 
@@ -770,15 +790,6 @@
                 const slug = hash.replace('#blog-slug/', '');
                 switchSectionOnly('blog');
                 fetchBlogPostBySlugAndOpen(slug);
-            } else if (hash === '#blog') {
-                switchSectionOnly('blog');
-                fetchBlogPosts();
-            } else if (hash === '#servicios') {
-                switchSectionOnly('servicios');
-            } else if (hash === '#artistas') {
-                switchSectionOnly('artistas');
-            } else if (hash === '#galeria') {
-                switchSectionOnly('galeria');
             } else {
                 switchSectionOnly('home');
             }
