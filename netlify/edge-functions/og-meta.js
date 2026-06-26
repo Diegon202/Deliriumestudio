@@ -6,17 +6,56 @@ export default async (request, context) => {
     .replace(/</g, "&lt;")
     .replace(/>/g, "&gt;")
     .replace(/"/g, "&quot;");
+
+  const injectHeadTags = (html, tags) => html
+    .replace(/<meta name="description" content="[^"]*">\s*/i, "")
+    .replace(/<link rel="canonical" href="[^"]*">\s*/i, "")
+    .replace(/<meta property="og:title" content="[^"]*">\s*/i, "")
+    .replace(/<meta property="og:description" content="[^"]*">\s*/i, "")
+    .replace(/<meta property="og:url" content="[^"]*">\s*/i, "")
+    .replace(/<meta property="og:type" content="[^"]*">\s*/i, "")
+    .replace(/<meta name="twitter:title" content="[^"]*">\s*/i, "")
+    .replace(/<meta name="twitter:description" content="[^"]*">\s*/i, "")
+    .replace(/<title>[^<]*<\/title>/i, tags);
   
   // Extraer el slug del post
   const cleanPath = path.toLowerCase().replace(/^\/+|\/+$/g, '');
   const parts = cleanPath.split('/');
   const slug = parts[parts.length - 1];
+  const isBlogIndex = slug === 'blog' || slug === 'blogs';
   
-  if (!slug || slug === 'blog' || slug === 'blogs') {
+  if (!slug) {
     return context.next();
   }
   
   try {
+    if (isBlogIndex) {
+      const response = await context.next();
+      let html = await response.text();
+      const blogUrl = "https://deliriumestudio.com/blog";
+      const blogTitle = "Blog de Música Nacional | Delirium Estudio Costa Rica";
+      const blogDescription = "Blog de música nacional de Delirium Estudio: producción musical, grabación, composición, artistas y escena musical de Costa Rica.";
+      const imageUrl = "https://deliriumestudio.com/images/490346567_1242544121207056_3612573338702904588_n.jpg";
+      const blogTags = `
+    <title>${blogTitle}</title>
+    <meta name="description" content="${blogDescription}">
+    <link rel="canonical" href="${blogUrl}">
+    <meta property="og:title" content="${blogTitle}">
+    <meta property="og:description" content="${blogDescription}">
+    <meta property="og:url" content="${blogUrl}">
+    <meta property="og:type" content="website">
+    <meta name="twitter:title" content="${blogTitle}">
+    <meta name="twitter:description" content="${blogDescription}">
+    `;
+      html = injectHeadTags(html, blogTags);
+
+      return new Response(html, {
+        headers: response.headers,
+        status: response.status,
+        statusText: response.statusText,
+      });
+    }
+
     // Consultar la API de WordPress.com por el slug específico
     const wpUrl = `https://public-api.wordpress.com/rest/v1.1/sites/delirium796.wordpress.com/posts/slug:${slug}`;
     const wpResponse = await fetch(wpUrl);
@@ -61,9 +100,7 @@ export default async (request, context) => {
     <meta name="twitter:image" content="${imageUrl}">
     `;
     
-    html = html.replace(/<link rel="canonical" href="[^"]*">/i, "");
-    // Reemplazar la etiqueta title por el bloque completo de etiquetas dinámicas
-    html = html.replace(/<title>[^<]*<\/title>/i, ogTags);
+    html = injectHeadTags(html, ogTags);
     
     return new Response(html, {
       headers: response.headers,
@@ -77,5 +114,5 @@ export default async (request, context) => {
 };
 
 export const config = {
-  path: ["/blog/*", "/blogs/*", "/Blog/*", "/Blogs/*"]
+  path: ["/blog", "/blogs", "/blog/*", "/blogs/*", "/Blog", "/Blogs", "/Blog/*", "/Blogs/*"]
 };
