@@ -137,6 +137,10 @@
                 <li><a id="nav-blog" href="#blog">Blog</a></li>
             </ul>
         </nav>
+        <div class="language-switcher" aria-label="Selector de idioma">
+            <button type="button" class="lang-btn active" data-lang="es" aria-label="Español">🇪🇸</button>
+            <button type="button" class="lang-btn" data-lang="en" aria-label="English">🇺🇸</button>
+        </div>
     </header>
 
     <main>
@@ -613,6 +617,276 @@
         const DEFAULT_TITLE = "Delirium Estudio | Estudio de Grabación en Costa Rica";
         const DEFAULT_DESCRIPTION = "Estudio de grabación profesional en Costa Rica, San José y Zona de los Santos. Producción musical, mezcla, masterización, jingles, composición, arreglos y contenido para redes con precios competitivos.";
         const DEFAULT_IMAGE = "https://deliriumestudio.com/images/490346567_1242544121207056_3612573338702904588_n.jpg";
+        const LANG_STORAGE_KEY = "delirium-language";
+        let currentLang = localStorage.getItem(LANG_STORAGE_KEY) || "es";
+
+        const translations = {
+            es: {
+                navHome: "Estudio",
+                navServices: "Servicios",
+                navArtists: "Artistas",
+                navGallery: "Galería",
+                navBlog: "Blog",
+                badge: "Grabando Sueños desde 2014",
+                tagline: "Estudio de Grabación en Costa Rica: Música, Jingles y Contenido para Redes",
+                description: "Estudio de grabación profesional en San Marcos de Tarrazú, San José, Costa Rica, a hora y media del centro de San José. Fundado y dirigido por el productor y arreglista Diego Burga Jiménez, Delirium Estudio combina acústica excelente, tecnología digital/analógica avanzada y precios competitivos para músicos, marcas y creadores. Producimos música, jingles publicitarios de alto impacto, podcasts, arreglos, composición y material audiovisual de primer nivel.",
+                quoteBtn: "💬 Cotizar por WhatsApp",
+                servicesBtn: "Ver Servicios",
+                productionsTitle: '<span class="accent-teal">Producciones</span> de Delirium',
+                productionsSubtitle: "Escucha y mira las obras realizadas y mezcladas en nuestras instalaciones.",
+                spotifyTitle: "🎵 Spotify Playlist",
+                spotifyText: "Algunas canciones grabadas en Delirium Estudio. Escucha la calidad de nuestro sonido.",
+                videoTitle: "🎥 Reproducción Destacada",
+                videoText: "Video destacado de Delirium Estudio. Se inicia automáticamente en silencio; activa el sonido desde el reproductor si quieres escucharlo.",
+                homeCardStudioTitle: "Estudio en San José",
+                homeCardStudioIntro: "Ubicados en San Marcos de Tarrazú, Zona de los Santos, Costa Rica.",
+                homeCardStudioDetails: "Atendemos proyectos de San José, Cartago, Pérez Zeledón y todo el país. Es una opción profesional cerca del Gran Área Metropolitana, con un entorno tranquilo ideal para grabar, componer y producir con enfoque.",
+                homeCardPriceTitle: "Precios Competitivos",
+                homeCardPriceIntro: "Producción profesional para presupuestos reales de artistas y marcas.",
+                homeCardPriceDetails: "Cotizamos grabación, mezcla, masterización, jingles, arreglos, composición y contenido para redes según el alcance del proyecto, buscando una relación calidad/precio fuerte en Costa Rica.",
+                homeCardMusicTitle: "Música Nacional",
+                homeCardMusicIntro: "Blog y producción conectados con la escena musical costarricense.",
+                homeCardMusicDetails: "Nuestro blog de música nacional comparte artículos, lanzamientos, reflexiones y experiencias de producción para artistas de Costa Rica que quieren sonar mejor y llegar más lejos.",
+                servicesTitle: '<span class="accent-orange">Nuestros Servicios</span>',
+                servicesSubtitle: "Soluciones profesionales de audio en Costa Rica respaldadas por nuestros años de experiencia. Haz clic en cualquier servicio para desplegar más información.",
+                serviceRecordingTitle: 'Grabación <span class="card-arrow">▶</span>',
+                serviceRecordingIntro: "Captura de audio multicanal con la más alta resolución y calidez acústica.",
+                serviceRecordingDetails: "Captura digital y analógica de la más alta fidelidad. Utilizamos micrófonos de condensador y dinámicos calibrados, junto con un acondicionamiento acústico óptimo para inmortalizar la esencia de tus voces e instrumentos con absoluta definición, dinámica y calidez natural.",
+                serviceMixTitle: 'Mezcla <span class="card-arrow">▶</span>',
+                serviceMixIntro: "Balance tridimensional, ecualización y procesamiento dinámico de pistas.",
+                serviceMixDetails: "Unión y balance tridimensional de todos tus canales. Ajustamos frecuencias, dinámicas, compresión y efectos espaciales (como reverbs, delays y modulaciones) para que cada elemento de la canción tenga su lugar en el espectro estéreo, logrando impacto, claridad y cohesión emocional.",
+                serviceEditTitle: 'Edición de Audio <span class="card-arrow">▶</span>',
+                serviceEditIntro: "Corrección de tiempo, afinación y limpieza profunda de tomas.",
+                serviceEditDetails: "Limpieza y pulido quirúrgico de tus pistas de audio. Realizamos afinación de voces con precisión natural mediante AutoTune y Melodyne, corrección rítmica (cuantización), eliminación de ruidos no deseados de fondo (siseos, clicks) y comping de tomas para armar la interpretación ideal.",
+                serviceMasterTitle: 'Masterización <span class="card-arrow">▶</span>',
+                serviceMasterIntro: "Procesamiento final para asegurar potencia y competitividad comercial.",
+                serviceMasterDetails: "El eslabón final en la cadena de audio. Maximizamos el volumen competitivo (LUFS), equilibramos el espectro de frecuencias general y optimizamos la dinámica para asegurar que tu producción suene perfecta, potente y uniforme en cualquier sistema de reproducción y plataformas de streaming.",
+                serviceCompositionTitle: 'Composición <span class="card-arrow">▶</span>',
+                serviceCompositionIntro: "Creación de bases musicales, melodías y estructuras desde cero.",
+                serviceCompositionDetails: "Damos vida a tus ideas abstractas. Colaboramos directamente contigo para estructurar armonías, progresiones de acordes, melodías memorables y letras desde cero, diseñando la base musical que mejor transmita la identidad y el mensaje de tu propuesta artística.",
+                serviceArrangementsTitle: 'Arreglos Musicales <span class="card-arrow">▶</span>',
+                serviceArrangementsIntro: "Orquestación, instrumentación complementaria y refinamiento de temas.",
+                serviceArrangementsDetails: "Enriquecemos tus canciones existentes con arreglos de primer nivel. Diseñamos instrumentaciones complementarias (líneas de bajo, sintetizadores, baterías, arreglos de cuerdas, vientos o teclados) para elevar la dinámica y el interés musical de tu tema, adaptándolo a las tendencias actuales.",
+                servicePodcastTitle: 'Podcast & Jingles <span class="card-arrow">▶</span>',
+                servicePodcastIntro: "Producción de audio para contenido digital, podcasts y jingles.",
+                servicePodcastDetails: "Soluciones integrales para creadores y marcas publicitarias. Grabación de podcasts con sonido cristalino, diseño de audio para redes sociales, y composición y producción de jingles publicitarios de alto impacto, respaldados por nuestros muchos años de experiencia en el sector.",
+                artistsTitle: '<span class="accent-cream">Catálogo de Artistas</span>',
+                artistsSubtitle: "Algunos artistas que pasaron por Delirium Estudio.",
+                artist: "Artista",
+                band: "Banda",
+                galleryTitle: '<span class="accent-teal">Galería del Estudio</span>',
+                gallerySubtitle: "Instalaciones, equipamiento técnico y sesiones de producción en Delirium Estudio. Haz clic en las imágenes para ampliarlas.",
+                blogTitle: '<span class="accent-orange">Blog de Delirium</span>',
+                blogSubtitle: "Artículos, noticias y reflexiones sobre el mundo de la grabación y producción musical.",
+                footerText: "Estudio de grabación, mezcla, masterización, composición y arreglos musicales premium. Tu sonido en su máxima fidelidad.",
+                footerServices: "Servicios",
+                footerRecording: "🎙️ Grabación & Edición",
+                footerMix: "🎛️ Mezcla Analógica & Digital",
+                footerMaster: "📀 Masterización Comercial",
+                footerComposition: "🎹 Composición & Arreglos",
+                footerContact: "Contacto & Enlaces",
+                footerLocation: "📍 Ubicación en Google Maps",
+                footerEmail: "✉️ Correo: diegojoseburga@gmail.com",
+                copyright: "© 2026 Delirium Estudio. Todos los derechos reservados. Diseñado por Diego Burga Jiménez & Antigravity.",
+                backBlog: "← Volver al Blog",
+                share: "Compartir",
+                blogMetaTitle: "Blog de Música Nacional | Delirium Estudio Costa Rica",
+                blogMetaDescription: "Blog de música nacional de Delirium Estudio: producción musical, grabación, composición, artistas y escena musical de Costa Rica."
+            },
+            en: {
+                navHome: "Studio",
+                navServices: "Services",
+                navArtists: "Artists",
+                navGallery: "Gallery",
+                navBlog: "Blog",
+                badge: "Recording Dreams Since 2014",
+                tagline: "Recording Studio in Costa Rica: Music, Jingles and Social Media Content",
+                description: "Professional recording studio in San Marcos de Tarrazú, San José, Costa Rica, about an hour and a half from downtown San José. Founded and led by producer and arranger Diego Burga Jiménez, Delirium Estudio combines excellent acoustics, advanced digital/analog technology and competitive pricing for musicians, brands and creators. We produce music, high-impact advertising jingles, podcasts, arrangements, composition and first-class audiovisual material.",
+                quoteBtn: "💬 Quote on WhatsApp",
+                servicesBtn: "View Services",
+                productionsTitle: '<span class="accent-teal">Productions</span> by Delirium',
+                productionsSubtitle: "Listen to and watch works recorded and mixed in our facilities.",
+                spotifyTitle: "🎵 Spotify Playlist",
+                spotifyText: "Some songs recorded at Delirium Estudio. Listen to the quality of our sound.",
+                videoTitle: "🎥 Featured Playback",
+                videoText: "Featured video from Delirium Estudio. It starts muted automatically; enable sound in the player if you want to listen.",
+                homeCardStudioTitle: "Studio in San José",
+                homeCardStudioIntro: "Located in San Marcos de Tarrazú, Zona de los Santos, Costa Rica.",
+                homeCardStudioDetails: "We work on projects from San José, Cartago, Pérez Zeledón and all over the country. It is a professional option near the Greater Metropolitan Area, with a calm setting ideal for recording, composing and producing with focus.",
+                homeCardPriceTitle: "Competitive Pricing",
+                homeCardPriceIntro: "Professional production for real artist and brand budgets.",
+                homeCardPriceDetails: "We quote recording, mixing, mastering, jingles, arrangements, composition and social media content according to each project's scope, aiming for a strong quality-to-price ratio in Costa Rica.",
+                homeCardMusicTitle: "Costa Rican Music",
+                homeCardMusicIntro: "Blog and production connected to Costa Rica's music scene.",
+                homeCardMusicDetails: "Our national music blog shares articles, releases, reflections and production experiences for Costa Rican artists who want to sound better and reach further.",
+                servicesTitle: '<span class="accent-orange">Our Services</span>',
+                servicesSubtitle: "Professional audio solutions in Costa Rica backed by years of experience. Click any service to expand more information.",
+                serviceRecordingTitle: 'Recording <span class="card-arrow">▶</span>',
+                serviceRecordingIntro: "Multichannel audio capture with high resolution and acoustic warmth.",
+                serviceRecordingDetails: "High-fidelity digital and analog capture. We use calibrated condenser and dynamic microphones with optimized acoustic treatment to preserve the essence of your vocals and instruments with definition, dynamics and natural warmth.",
+                serviceMixTitle: 'Mixing <span class="card-arrow">▶</span>',
+                serviceMixIntro: "Three-dimensional balance, EQ and dynamic processing for your tracks.",
+                serviceMixDetails: "Three-dimensional balance across all your channels. We shape frequencies, dynamics, compression and spatial effects such as reverb, delay and modulation so every element has its place in the stereo field with impact, clarity and emotional cohesion.",
+                serviceEditTitle: 'Audio Editing <span class="card-arrow">▶</span>',
+                serviceEditIntro: "Timing correction, tuning and deep cleanup of takes.",
+                serviceEditDetails: "Surgical cleanup and polishing for your audio tracks. We perform natural vocal tuning with AutoTune and Melodyne, rhythmic correction, unwanted noise removal and take comping to build the ideal performance.",
+                serviceMasterTitle: 'Mastering <span class="card-arrow">▶</span>',
+                serviceMasterIntro: "Final processing for power and commercial competitiveness.",
+                serviceMasterDetails: "The final link in the audio chain. We maximize competitive loudness, balance the overall frequency spectrum and optimize dynamics so your production sounds powerful, consistent and ready across playback systems and streaming platforms.",
+                serviceCompositionTitle: 'Composition <span class="card-arrow">▶</span>',
+                serviceCompositionIntro: "Creation of musical foundations, melodies and structures from scratch.",
+                serviceCompositionDetails: "We bring abstract ideas to life. We collaborate directly with you to structure harmonies, chord progressions, memorable melodies and lyrics from scratch, creating the musical foundation that best carries your artistic identity and message.",
+                serviceArrangementsTitle: 'Musical Arrangements <span class="card-arrow">▶</span>',
+                serviceArrangementsIntro: "Orchestration, complementary instrumentation and song refinement.",
+                serviceArrangementsDetails: "We enrich your existing songs with high-level arrangements. We design complementary instrumentation such as bass lines, synths, drums, strings, brass or keys to elevate the dynamics and musical interest of your track while adapting it to current trends.",
+                servicePodcastTitle: 'Podcasts & Jingles <span class="card-arrow">▶</span>',
+                servicePodcastIntro: "Audio production for digital content, podcasts and jingles.",
+                servicePodcastDetails: "Complete solutions for creators and advertising brands. Podcast recording with crystal-clear sound, audio design for social media, and high-impact advertising jingles backed by many years of experience in the field.",
+                artistsTitle: '<span class="accent-cream">Artist Catalog</span>',
+                artistsSubtitle: "Some artists who have worked at Delirium Estudio.",
+                artist: "Artist",
+                band: "Band",
+                galleryTitle: '<span class="accent-teal">Studio Gallery</span>',
+                gallerySubtitle: "Facilities, technical equipment and production sessions at Delirium Estudio. Click images to enlarge them.",
+                blogTitle: '<span class="accent-orange">Delirium Blog</span>',
+                blogSubtitle: "Articles, news and reflections about recording and music production.",
+                footerText: "Premium recording, mixing, mastering, composition and musical arrangement studio. Your sound at its highest fidelity.",
+                footerServices: "Services",
+                footerRecording: "🎙️ Recording & Editing",
+                footerMix: "🎛️ Analog & Digital Mixing",
+                footerMaster: "📀 Commercial Mastering",
+                footerComposition: "🎹 Composition & Arrangements",
+                footerContact: "Contact & Links",
+                footerLocation: "📍 Location on Google Maps",
+                footerEmail: "✉️ Email: diegojoseburga@gmail.com",
+                copyright: "© 2026 Delirium Estudio. All rights reserved. Designed by Diego Burga Jiménez & Antigravity.",
+                backBlog: "← Back to Blog",
+                share: "Share",
+                blogMetaTitle: "Music Blog | Delirium Estudio Costa Rica",
+                blogMetaDescription: "Delirium Estudio music blog: music production, recording, composition, artists and Costa Rica's music scene."
+            }
+        };
+
+        const translationTargets = [
+            ["#nav-home", "navHome"],
+            ["#nav-servicios", "navServices"],
+            ["#nav-artistas", "navArtists"],
+            ["#nav-galeria", "navGallery"],
+            ["#nav-blog", "navBlog"],
+            [".hero-experience-badge", "badge"],
+            [".hero p.tagline", "tagline"],
+            [".hero p.description", "description"],
+            [".btn-whatsapp", "quoteBtn"],
+            [".btn-outline[href='#servicios']", "servicesBtn"],
+            ["#sec-home .reveal:nth-of-type(2) .section-title", "productionsTitle", true],
+            ["#sec-home .reveal:nth-of-type(2) .section-subtitle", "productionsSubtitle"],
+            [".media-card:nth-child(1) h3", "spotifyTitle"],
+            [".media-card:nth-child(1) p", "spotifyText"],
+            [".media-card:nth-child(2) h3", "videoTitle"],
+            [".media-card:nth-child(2) p", "videoText"],
+            ["#sec-home .grid-3 .card:nth-child(1) h3", "homeCardStudioTitle"],
+            ["#sec-home .grid-3 .card:nth-child(1) .card-intro", "homeCardStudioIntro"],
+            ["#sec-home .grid-3 .card:nth-child(1) .service-details", "homeCardStudioDetails"],
+            ["#sec-home .grid-3 .card:nth-child(2) h3", "homeCardPriceTitle"],
+            ["#sec-home .grid-3 .card:nth-child(2) .card-intro", "homeCardPriceIntro"],
+            ["#sec-home .grid-3 .card:nth-child(2) .service-details", "homeCardPriceDetails"],
+            ["#sec-home .grid-3 .card:nth-child(3) h3", "homeCardMusicTitle"],
+            ["#sec-home .grid-3 .card:nth-child(3) .card-intro", "homeCardMusicIntro"],
+            ["#sec-home .grid-3 .card:nth-child(3) .service-details", "homeCardMusicDetails"],
+            ["#sec-servicios .section-title", "servicesTitle", true],
+            ["#sec-servicios .section-subtitle", "servicesSubtitle"],
+            ["#sec-servicios > .grid-3:nth-of-type(2) .card:nth-child(1) h3", "serviceRecordingTitle", true],
+            ["#sec-servicios > .grid-3:nth-of-type(2) .card:nth-child(1) .card-intro", "serviceRecordingIntro"],
+            ["#sec-servicios > .grid-3:nth-of-type(2) .card:nth-child(1) .service-details", "serviceRecordingDetails"],
+            ["#sec-servicios > .grid-3:nth-of-type(2) .card:nth-child(2) h3", "serviceMixTitle", true],
+            ["#sec-servicios > .grid-3:nth-of-type(2) .card:nth-child(2) .card-intro", "serviceMixIntro"],
+            ["#sec-servicios > .grid-3:nth-of-type(2) .card:nth-child(2) .service-details", "serviceMixDetails"],
+            ["#sec-servicios > .grid-3:nth-of-type(2) .card:nth-child(3) h3", "serviceEditTitle", true],
+            ["#sec-servicios > .grid-3:nth-of-type(2) .card:nth-child(3) .card-intro", "serviceEditIntro"],
+            ["#sec-servicios > .grid-3:nth-of-type(2) .card:nth-child(3) .service-details", "serviceEditDetails"],
+            ["#sec-servicios > .grid-3:nth-of-type(3) .card:nth-child(1) h3", "serviceMasterTitle", true],
+            ["#sec-servicios > .grid-3:nth-of-type(3) .card:nth-child(1) .card-intro", "serviceMasterIntro"],
+            ["#sec-servicios > .grid-3:nth-of-type(3) .card:nth-child(1) .service-details", "serviceMasterDetails"],
+            ["#sec-servicios > .grid-3:nth-of-type(3) .card:nth-child(2) h3", "serviceCompositionTitle", true],
+            ["#sec-servicios > .grid-3:nth-of-type(3) .card:nth-child(2) .card-intro", "serviceCompositionIntro"],
+            ["#sec-servicios > .grid-3:nth-of-type(3) .card:nth-child(2) .service-details", "serviceCompositionDetails"],
+            ["#sec-servicios > .grid-3:nth-of-type(3) .card:nth-child(3) h3", "serviceArrangementsTitle", true],
+            ["#sec-servicios > .grid-3:nth-of-type(3) .card:nth-child(3) .card-intro", "serviceArrangementsIntro"],
+            ["#sec-servicios > .grid-3:nth-of-type(3) .card:nth-child(3) .service-details", "serviceArrangementsDetails"],
+            ["#sec-servicios .reveal:nth-of-type(4) h3", "servicePodcastTitle", true],
+            ["#sec-servicios .reveal:nth-of-type(4) .card-intro", "servicePodcastIntro"],
+            ["#sec-servicios .reveal:nth-of-type(4) .service-details", "servicePodcastDetails"],
+            ["#sec-artistas .section-title", "artistsTitle", true],
+            ["#sec-artistas .section-subtitle", "artistsSubtitle"],
+            ["#sec-galeria .section-title", "galleryTitle", true],
+            ["#sec-galeria .section-subtitle", "gallerySubtitle"],
+            ["#sec-blog .section-title", "blogTitle", true],
+            ["#sec-blog .section-subtitle", "blogSubtitle"],
+            [".footer-col:nth-child(1) p", "footerText"],
+            [".footer-col:nth-child(2) h4", "footerServices"],
+            [".footer-col:nth-child(2) li:nth-child(1)", "footerRecording"],
+            [".footer-col:nth-child(2) li:nth-child(2)", "footerMix"],
+            [".footer-col:nth-child(2) li:nth-child(3)", "footerMaster"],
+            [".footer-col:nth-child(2) li:nth-child(4)", "footerComposition"],
+            [".footer-col:nth-child(3) h4", "footerContact"],
+            [".footer-col:nth-child(3) li:nth-child(2) a", "footerLocation"],
+            [".footer-col:nth-child(3) li:nth-child(3) a", "footerEmail"],
+            [".copyright", "copyright"]
+        ];
+
+        function t(key) {
+            return translations[currentLang][key] || translations.es[key] || "";
+        }
+
+        function applyLanguage(lang) {
+            currentLang = translations[lang] ? lang : "es";
+            localStorage.setItem(LANG_STORAGE_KEY, currentLang);
+            document.documentElement.lang = currentLang === "en" ? "en" : "es";
+
+            document.querySelectorAll(".lang-btn").forEach(button => {
+                const isActive = button.dataset.lang === currentLang;
+                button.classList.toggle("active", isActive);
+                button.setAttribute("aria-pressed", isActive ? "true" : "false");
+            });
+
+            translationTargets.forEach(([selector, key, useHtml]) => {
+                const element = document.querySelector(selector);
+                if (!element) return;
+                if (useHtml) {
+                    element.innerHTML = t(key);
+                } else {
+                    element.textContent = t(key);
+                }
+            });
+
+            const bandNames = new Set(["Asalto Voluntario", "Mal Augurio", "Rana Bruja", "San Blas", "Santo Remedio"]);
+            document.querySelectorAll(".artist-card").forEach(card => {
+                const name = card.querySelector("h3")?.textContent?.trim();
+                const role = card.querySelector(".artist-role");
+                if (!name || !role) return;
+                role.textContent = bandNames.has(name) ? t("band") : t("artist");
+            });
+
+            const articleBackLink = document.querySelector("#blog-post-reader > .btn-outline");
+            if (articleBackLink) articleBackLink.textContent = t("backBlog");
+            const articleShareTitle = document.querySelector("#blog-post-reader .share-title");
+            if (articleShareTitle) articleShareTitle.textContent = t("share");
+
+            if (document.getElementById("sec-blog")?.classList.contains("active")) {
+                setBlogMeta();
+            } else {
+                resetHomeMeta();
+            }
+        }
+
+        function setupLanguageSwitcher() {
+            document.querySelectorAll(".lang-btn").forEach(button => {
+                button.addEventListener("click", () => {
+                    applyLanguage(button.dataset.lang);
+                });
+            });
+            applyLanguage(currentLang);
+        }
 
         function setMetaTag(selector, attrName, value) {
             const tag = document.head.querySelector(selector);
@@ -644,8 +918,8 @@
 
         function setBlogMeta() {
             updatePageMeta({
-                title: "Blog de Música Nacional | Delirium Estudio Costa Rica",
-                description: "Blog de música nacional de Delirium Estudio: producción musical, grabación, composición, artistas y escena musical de Costa Rica.",
+                title: t("blogMetaTitle"),
+                description: t("blogMetaDescription"),
                 url: `${SITE_URL}blog`,
                 image: DEFAULT_IMAGE
             });
@@ -979,14 +1253,14 @@
             const supportsShare = !!navigator.share;
 
             reader.innerHTML = `
-                <a href="/blog" onclick="backToBlogGrid(event)" class="btn btn-outline" style="margin-bottom: 2.5rem; border-radius: 30px;">← Volver al Blog</a>
+                <a href="/blog" onclick="backToBlogGrid(event)" class="btn btn-outline" style="margin-bottom: 2.5rem; border-radius: 30px;">${t("backBlog")}</a>
                 <article class="full-article">
                     <span class="article-date">📅 Publicado el ${date} por ${post.author.name}</span>
                     <h1 class="article-title">${post.title}</h1>
                     
                     <!-- Barra de Compartir -->
                     <div class="article-share-bar">
-                        <span class="share-title">Compartir</span>
+                        <span class="share-title">${t("share")}</span>
                         <div class="share-actions" aria-label="Opciones para compartir el artículo">
                             <a href="https://api.whatsapp.com/send?text=${shareTextEscaped}%20${shareUrlEscaped}" target="_blank" rel="noopener" class="share-btn whatsapp" title="Compartir en WhatsApp" aria-label="Compartir en WhatsApp">WA</a>
                             <a href="https://www.facebook.com/sharer/sharer.php?u=${shareUrlEscaped}" target="_blank" rel="noopener" class="share-btn facebook" title="Compartir en Facebook" aria-label="Compartir en Facebook">f</a>
@@ -1145,6 +1419,7 @@
         }
 
         document.addEventListener('DOMContentLoaded', () => {
+            setupLanguageSwitcher();
             setupBackgroundVideo();
             handleScrollReveal();
             handleRouting();
