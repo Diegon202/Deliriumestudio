@@ -2,6 +2,9 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
+    <script>
+        document.documentElement.classList.add('routing-pending');
+    </script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Delirium Estudio | Estudio de Grabación en Costa Rica</title>
     <meta name="description" content="Estudio de grabación profesional en Costa Rica, San José y Zona de los Santos. Producción musical, mezcla, masterización, jingles, composición, arreglos y contenido para redes con precios competitivos.">
@@ -100,7 +103,7 @@
 <body>
 
     <!-- Background Video -->
-    <video class="site-bg-video" autoplay muted loop playsinline poster="/images/490346567_1242544121207056_3612573338702904588_n.jpg" aria-hidden="true">
+    <video class="site-bg-video" autoplay muted loop playsinline preload="auto" poster="/images/490346567_1242544121207056_3612573338702904588_n.jpg" aria-hidden="true">
         <source src="/videos/seas-of-hate-web.mp4" type="video/mp4">
     </video>
 
@@ -649,6 +652,7 @@
         }
 
         function switchSectionOnly(sectionId) {
+            const isInitialRouting = document.documentElement.classList.contains('routing-pending');
             // Hide all sections
             document.querySelectorAll('.section').forEach(sec => {
                 sec.classList.remove('active');
@@ -665,14 +669,70 @@
             if (navLink) navLink.classList.add('active');
             
             // Scroll to top
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+            window.scrollTo({ top: 0, behavior: isInitialRouting ? 'auto' : 'smooth' });
 
             if (sectionId !== 'blog') {
                 resetHomeMeta();
             }
 
+            document.documentElement.classList.remove('routing-pending');
+
             // Trigger immediately scroll reveal evaluation
             handleScrollReveal();
+        }
+
+        function setupBackgroundVideo() {
+            const video = document.querySelector('.site-bg-video');
+            if (!video) return;
+
+            const source = video.querySelector('source');
+            const videoPaths = [
+                '/videos/seas-of-hate-web.mp4',
+                'videos/seas-of-hate-web.mp4',
+                '/preview/videos/seas-of-hate-web.mp4',
+                'preview/videos/seas-of-hate-web.mp4'
+            ];
+            const posterPaths = [
+                '/images/490346567_1242544121207056_3612573338702904588_n.jpg',
+                'images/490346567_1242544121207056_3612573338702904588_n.jpg',
+                '/preview/images/490346567_1242544121207056_3612573338702904588_n.jpg',
+                'preview/images/490346567_1242544121207056_3612573338702904588_n.jpg'
+            ];
+            let sourceIndex = 0;
+
+            function tryVideoPath(index) {
+                if (!source || index >= videoPaths.length) return;
+                sourceIndex = index;
+                source.src = videoPaths[index];
+                video.load();
+                const playAttempt = video.play();
+                if (playAttempt && typeof playAttempt.catch === 'function') {
+                    playAttempt.catch(() => {});
+                }
+            }
+
+            video.addEventListener('error', () => {
+                tryVideoPath(sourceIndex + 1);
+            });
+
+            if (source) {
+                source.addEventListener('error', () => {
+                    tryVideoPath(sourceIndex + 1);
+                });
+            }
+
+            const posterProbe = new Image();
+            let posterIndex = 0;
+            posterProbe.onerror = () => {
+                posterIndex += 1;
+                if (posterIndex < posterPaths.length) {
+                    posterProbe.src = posterPaths[posterIndex];
+                    video.poster = posterPaths[posterIndex];
+                }
+            };
+            posterProbe.src = posterPaths[0];
+
+            tryVideoPath(0);
         }
 
         // Enrutador central basado en hashes de URL y rutas limpias (SPA Routing)
@@ -1076,11 +1136,13 @@
             });
         }
 
-        window.addEventListener('scroll', handleScrollReveal);
-        window.addEventListener('load', () => {
+        document.addEventListener('DOMContentLoaded', () => {
+            setupBackgroundVideo();
             handleScrollReveal();
             handleRouting();
         });
+        window.addEventListener('scroll', handleScrollReveal);
+        window.addEventListener('load', handleScrollReveal);
         window.addEventListener('hashchange', handleRouting);
         window.addEventListener('popstate', handleRouting);
     </script>

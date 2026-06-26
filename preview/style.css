@@ -56,10 +56,7 @@ body::before {
     left: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(rgba(7, 7, 7, 0.66), rgba(7, 7, 7, 0.86)), url('/images/490346567_1242544121207056_3612573338702904588_n.jpg');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
+    background: linear-gradient(rgba(7, 7, 7, 0.58), rgba(7, 7, 7, 0.82));
     z-index: -2;
 }
 
@@ -239,6 +236,10 @@ main {
 
 .section.active {
     display: block;
+}
+
+.routing-pending .section.active {
+    display: none;
 }
 
 /* Hero Section */
