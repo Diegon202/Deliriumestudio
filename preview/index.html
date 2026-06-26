@@ -1216,6 +1216,14 @@
             fetchBlogPostBySlugAndOpen(cleanSlug);
         }
 
+        const shareIcons = {
+            whatsapp: '<svg viewBox="0 0 32 32" aria-hidden="true"><path d="M16.01 3.2c-7.06 0-12.8 5.74-12.8 12.8 0 2.26.59 4.47 1.72 6.41L3.1 29l6.75-1.77a12.7 12.7 0 0 0 6.16 1.57c7.06 0 12.8-5.74 12.8-12.8s-5.74-12.8-12.8-12.8Zm0 23.44c-1.95 0-3.86-.53-5.52-1.53l-.4-.24-4.01 1.05 1.07-3.91-.26-.4a10.55 10.55 0 0 1-1.62-5.61c0-5.91 4.82-10.72 10.74-10.72 5.91 0 10.72 4.81 10.72 10.72 0 5.92-4.81 10.74-10.72 10.74Zm5.88-8.04c-.32-.16-1.9-.94-2.2-1.05-.29-.11-.51-.16-.72.16-.21.32-.83 1.05-1.02 1.27-.19.21-.37.24-.69.08-.32-.16-1.35-.5-2.58-1.59-.95-.85-1.6-1.9-1.78-2.22-.19-.32-.02-.49.14-.65.14-.14.32-.37.48-.56.16-.19.21-.32.32-.53.11-.21.05-.4-.03-.56-.08-.16-.72-1.74-.99-2.38-.26-.62-.52-.53-.72-.54h-.62c-.21 0-.56.08-.85.4-.29.32-1.12 1.1-1.12 2.67s1.15 3.09 1.31 3.3c.16.21 2.26 3.45 5.47 4.84.76.33 1.36.53 1.82.68.77.24 1.47.21 2.02.13.62-.09 1.9-.78 2.17-1.53.27-.75.27-1.39.19-1.53-.08-.13-.29-.21-.61-.37Z"/></svg>',
+            facebook: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M24 12.07C24 5.4 18.63 0 12 0S0 5.4 0 12.07C0 18.1 4.39 23.1 10.13 24v-8.43H7.08v-3.5h3.05V9.42c0-3.02 1.79-4.69 4.53-4.69 1.31 0 2.69.24 2.69.24v2.96h-1.52c-1.49 0-1.96.93-1.96 1.89v2.25h3.33l-.53 3.5h-2.8V24C19.61 23.1 24 18.1 24 12.07Z"/></svg>',
+            instagram: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7.8 2h8.4A5.8 5.8 0 0 1 22 7.8v8.4a5.8 5.8 0 0 1-5.8 5.8H7.8A5.8 5.8 0 0 1 2 16.2V7.8A5.8 5.8 0 0 1 7.8 2Zm-.2 2A3.6 3.6 0 0 0 4 7.6v8.8A3.6 3.6 0 0 0 7.6 20h8.8a3.6 3.6 0 0 0 3.6-3.6V7.6A3.6 3.6 0 0 0 16.4 4H7.6Zm9.65 1.75a1.35 1.35 0 1 1 0 2.7 1.35 1.35 0 0 1 0-2.7ZM12 7.35A4.65 4.65 0 1 1 12 16.65 4.65 4.65 0 0 1 12 7.35Zm0 2A2.65 2.65 0 1 0 12 14.65 2.65 2.65 0 0 0 12 9.35Z"/></svg>',
+            smartphone: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17 2H7a2.75 2.75 0 0 0-2.75 2.75v14.5A2.75 2.75 0 0 0 7 22h10a2.75 2.75 0 0 0 2.75-2.75V4.75A2.75 2.75 0 0 0 17 2Zm.75 17.25c0 .41-.34.75-.75.75H7a.75.75 0 0 1-.75-.75V4.75c0-.41.34-.75.75-.75h10c.41 0 .75.34.75.75v14.5ZM9.75 17.5h4.5a1 1 0 1 1 0 2h-4.5a1 1 0 1 1 0-2Zm3-9.42v4.09l1.46-1.46a1 1 0 0 1 1.42 1.42l-3.17 3.16a1 1 0 0 1-1.42 0l-3.17-3.16a1 1 0 0 1 1.42-1.42l1.46 1.46V8.08a1 1 0 1 1 2 0Z"/></svg>',
+            copy: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 7.25A3.25 3.25 0 0 1 11.25 4h6.5A3.25 3.25 0 0 1 21 7.25v6.5A3.25 3.25 0 0 1 17.75 17h-6.5A3.25 3.25 0 0 1 8 13.75v-6.5Zm3.25-1.25A1.25 1.25 0 0 0 10 7.25v6.5c0 .69.56 1.25 1.25 1.25h6.5c.69 0 1.25-.56 1.25-1.25v-6.5c0-.69-.56-1.25-1.25-1.25h-6.5ZM3 10.25A3.25 3.25 0 0 1 6.25 7H7v2h-.75C5.56 9 5 9.56 5 10.25v6.5C5 17.44 5.56 18 6.25 18h6.5c.69 0 1.25-.56 1.25-1.25V16h2v.75A3.25 3.25 0 0 1 12.75 20h-6.5A3.25 3.25 0 0 1 3 16.75v-6.5Z"/></svg>'
+        };
+
         function renderBlogPostContent(post) {
             const reader = document.getElementById('blog-post-reader');
             const date = new Date(post.date).toLocaleDateString('es-ES', {
@@ -1235,6 +1243,7 @@
             const shareText = `Escucha lo último de Delirium Estudio: "${post.title}"`;
             const shareTextEscaped = encodeURIComponent(shareText);
             const shareUrlEscaped = encodeURIComponent(cleanShareUrl);
+            const facebookShareUrl = `https://www.facebook.com/sharer/sharer.php?u=${shareUrlEscaped}`;
             const tempMetaDiv = document.createElement("div");
             tempMetaDiv.innerHTML = post.excerpt || post.content || "";
             const cleanMetaDescription = (tempMetaDiv.textContent || tempMetaDiv.innerText || "").replace(/\s+/g, " ").trim().slice(0, 155) || DEFAULT_DESCRIPTION;
@@ -1262,13 +1271,13 @@
                     <div class="article-share-bar">
                         <span class="share-title">${t("share")}</span>
                         <div class="share-actions" aria-label="Opciones para compartir el artículo">
-                            <a href="https://api.whatsapp.com/send?text=${shareTextEscaped}%20${shareUrlEscaped}" target="_blank" rel="noopener" class="share-btn whatsapp" title="Compartir en WhatsApp" aria-label="Compartir en WhatsApp">WA</a>
-                            <a href="https://www.facebook.com/sharer/sharer.php?u=${shareUrlEscaped}" target="_blank" rel="noopener" class="share-btn facebook" title="Compartir en Facebook" aria-label="Compartir en Facebook">f</a>
+                            <a href="https://api.whatsapp.com/send?text=${shareTextEscaped}%20${shareUrlEscaped}" target="_blank" rel="noopener" class="share-btn whatsapp" title="Compartir en WhatsApp" aria-label="Compartir en WhatsApp">${shareIcons.whatsapp}</a>
+                            <a href="${facebookShareUrl}" onclick="openFacebookShare(event, '${cleanShareUrl}')" target="_blank" rel="noopener" class="share-btn facebook" title="Compartir en Facebook" aria-label="Compartir en Facebook">${shareIcons.facebook}</a>
                             ${supportsShare ? `
-                                <button onclick="shareNatively('${post.title.replace(/'/g, "\\'")}', '${cleanShareUrl}')" class="share-btn native-share" title="Abrir el menú de compartir del dispositivo" aria-label="Compartir con el dispositivo">↗</button>
+                                <button onclick="shareNatively('${post.title.replace(/'/g, "\\'")}', '${cleanShareUrl}')" class="share-btn native-share" title="Abrir el menú de compartir del dispositivo" aria-label="Compartir con el dispositivo">${shareIcons.smartphone}</button>
                             ` : ''}
-                            <button onclick="shareToInstagram('${cleanShareUrl}')" class="share-btn instagram" title="Copiar enlace para Instagram Stories" aria-label="Copiar enlace para Instagram">IG</button>
-                            <button onclick="copyToClipboard('${cleanShareUrl}')" class="share-btn copy" title="Copiar enlace" aria-label="Copiar enlace">⛓</button>
+                            <button onclick="shareToInstagram('${cleanShareUrl}')" class="share-btn instagram" title="Copiar enlace para Instagram Stories" aria-label="Copiar enlace para Instagram">${shareIcons.instagram}</button>
+                            <button onclick="copyToClipboard('${cleanShareUrl}')" class="share-btn copy" title="Copiar enlace" aria-label="Copiar enlace">${shareIcons.copy}</button>
                         </div>
                     </div>
                     
@@ -1278,6 +1287,15 @@
                     </div>
                 </article>
             `;
+        }
+
+        function openFacebookShare(event, url) {
+            const encodedUrl = encodeURIComponent(url);
+            const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) || (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
+            if (!isIOS) return;
+
+            event.preventDefault();
+            window.open(`https://m.facebook.com/sharer.php?u=${encodedUrl}`, "_blank", "noopener");
         }
 
         function backToBlogGrid(e) {
