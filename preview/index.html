@@ -828,6 +828,7 @@
         // ================= BLOG DYNAMIC INTEGRATION (WORDPRESS API) =================
         const WP_API_URL = "https://public-api.wordpress.com/rest/v1.1/sites/delirium796.wordpress.com/posts";
         let blogPostsData = [];
+        let blogPostsListLoaded = false;
 
         function fetchBlogPosts() {
             setBlogMeta();
@@ -838,8 +839,9 @@
             grid.style.display = 'grid';
             reader.style.display = 'none';
             
-            // Si los artículos ya están cargados, los renderiza directamente de caché
-            if (blogPostsData.length > 0) {
+            // Solo usamos caché cuando ya se cargó la lista completa.
+            // Al abrir un artículo directo, la caché puede tener únicamente ese post.
+            if (blogPostsListLoaded) {
                 renderPostsGrid(blogPostsData);
                 return;
             }
@@ -850,6 +852,7 @@
                 .then(response => response.json())
                 .then(data => {
                     blogPostsData = data.posts;
+                    blogPostsListLoaded = true;
                     renderPostsGrid(blogPostsData);
                 })
                 .catch(error => {
@@ -916,6 +919,7 @@
                 .then(response => response.json())
                 .then(data => {
                     blogPostsData = data.posts;
+                    blogPostsListLoaded = true;
                     renderPostsGrid(blogPostsData);
                     const post = blogPostsData.find(p => p.ID === postId);
                     if (post) {
@@ -1112,6 +1116,7 @@
                 .then(response => response.json())
                 .then(data => {
                     blogPostsData = data.posts;
+                    blogPostsListLoaded = true;
                     renderPostsGrid(blogPostsData);
                     const post = blogPostsData.find(p => p.slug === normalizedSlug);
                     if (post) {
