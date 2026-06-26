@@ -908,10 +908,9 @@
                         <a href="https://www.facebook.com/sharer/sharer.php?u=${shareUrlEscaped}" onclick="handleFacebookShare(event, '${post.title.replace(/'/g, "\\'")}', '${cleanShareUrl}')" target="_blank" class="share-btn facebook" title="Compartir en Facebook">🔵 Facebook</a>
                         
                         ${supportsShare ? `
-                            <button onclick="shareNatively('${post.title.replace(/'/g, "\\'")}', '${cleanShareUrl}')" class="share-btn native-share" title="Compartir en Instagram Stories u otras Apps">📱 Compartir en Redes</button>
-                        ` : `
-                            <button onclick="shareFallback('${cleanShareUrl}')" class="share-btn native-share" title="Instrucciones para compartir en Instagram">📱 Compartir en Instagram</button>
-                        `}
+                            <button onclick="shareNatively('${post.title.replace(/'/g, "\\'")}', '${cleanShareUrl}')" class="share-btn native-share" title="Abrir el menú de compartir del dispositivo">📱 Compartir</button>
+                        ` : ''}
+                        <button onclick="shareToInstagram('${cleanShareUrl}')" class="share-btn native-share" title="Copiar enlace para Instagram Stories">📸 Instagram</button>
                         
                         <button onclick="copyToClipboard('${cleanShareUrl}')" class="share-btn copy" title="Copiar enlace">📋 Copiar Enlace</button>
                     </div>
@@ -976,7 +975,7 @@
             });
         }
 
-        function shareFallback(url) {
+        function shareToInstagram(url) {
             navigator.clipboard.writeText(url).then(() => {
                 alert("¡Enlace del artículo copiado al portapapeles!\n\nPara compartirlo en tus Historias de Instagram:\n1. Abre Instagram y crea una Historia.\n2. Selecciona la opción de Sticker de 'Enlace' (Link).\n3. Pega este enlace y publícala.");
             }).catch(err => {
