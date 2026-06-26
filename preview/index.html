@@ -809,7 +809,7 @@
                 const cleanExcerpt = tempDiv.textContent || tempDiv.innerText || "";
 
                 return `
-                    <a href="/blogs/${post.slug}" class="card orange-glow blog-card reveal active" style="text-decoration: none; color: inherit;">
+                    <a href="/blogs/${post.slug}" data-slug="${post.slug}" onclick="openBlogPostFromGrid(event, this.dataset.slug)" class="card orange-glow blog-card reveal active" style="text-decoration: none; color: inherit;">
                         <div class="blog-thumbnail-wrapper">
                             <img src="${thumbnail}" alt="${post.title}" class="blog-thumbnail">
                         </div>
@@ -857,6 +857,14 @@
                     console.error("Error al cargar artículo por ID: ", error);
                     reader.innerHTML = '<div class="error-message">Error de conexión al cargar el artículo.<br><a href="#blog" class="btn btn-outline" style="margin-top: 1.5rem; display: inline-flex; border-radius: 30px;">Ir al Blog</a></div>';
                 });
+        }
+
+        function openBlogPostFromGrid(event, slug) {
+            if (event) event.preventDefault();
+            const cleanSlug = slug.trim().toLowerCase();
+            window.history.pushState({}, '', `/blogs/${cleanSlug}`);
+            switchSectionOnly('blog');
+            fetchBlogPostBySlugAndOpen(cleanSlug);
         }
 
         function renderBlogPostContent(post) {
@@ -1074,6 +1082,7 @@
             handleRouting();
         });
         window.addEventListener('hashchange', handleRouting);
+        window.addEventListener('popstate', handleRouting);
     </script>
 </body>
 </html>
