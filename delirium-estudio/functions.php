@@ -30,6 +30,38 @@ function delirium_estudio_scripts() {
 add_action( 'wp_enqueue_scripts', 'delirium_estudio_scripts' );
 
 /**
+ * Add favicon, app icon and logo metadata for search engines.
+ */
+function delirium_estudio_head_branding() {
+    $theme_uri       = get_template_directory_uri();
+    $favicon_url     = esc_url( $theme_uri . '/assets/favicon.png' );
+    $apple_icon_url  = esc_url( $theme_uri . '/assets/apple-touch-icon.png' );
+    $manifest_url    = esc_url( $theme_uri . '/assets/site.webmanifest' );
+    $site_url        = esc_url( home_url( '/' ) );
+    ?>
+    <link rel="icon" type="image/png" sizes="96x96" href="<?php echo $favicon_url; ?>">
+    <link rel="apple-touch-icon" sizes="180x180" href="<?php echo $apple_icon_url; ?>">
+    <link rel="manifest" href="<?php echo $manifest_url; ?>">
+    <script type="application/ld+json">
+    <?php
+    echo wp_json_encode(
+        array(
+            '@context' => 'https://schema.org',
+            '@type'    => 'LocalBusiness',
+            'name'     => get_bloginfo( 'name' ),
+            'url'      => $site_url,
+            'logo'     => $favicon_url,
+            'image'    => $favicon_url,
+        ),
+        JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT
+    );
+    ?>
+    </script>
+    <?php
+}
+add_action( 'wp_head', 'delirium_estudio_head_branding', 1 );
+
+/**
  * Register Custom Post Type: Pinturas (Paintings)
  */
 function delirium_estudio_register_cpt_pintura() {
